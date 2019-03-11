@@ -1,5 +1,5 @@
 '''
-    let test:()=>void=funciton(){
-        console.log(test)
-    }
+$    let test:()=>void=funciton(){
+$        console.log(test)
+$   }
 '''
