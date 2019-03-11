@@ -1,5 +1,5 @@
-'''
-$    let test:()=>void=funciton(){
-$        console.log(test)
-$   }
+'''bash
+    let test:()=>void=funciton(){
+        console.log(test)
+   }
 '''
