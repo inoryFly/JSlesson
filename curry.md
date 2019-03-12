@@ -4,15 +4,14 @@
     一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术
 
 ## 2.简单实现
-
-    ```typescript
+```typescript
         let testCurry:(fn:Function)=>Function=function(fn){
             let args=[].slice.call(arguments,1)
             return function(){
                 return fn.apply(this,args.concat([].slice.call(arguments)))
             }
         }
-    ```
+```
 ## 3.提高适用性--降低适用范围
 -    例如：一般性得封装ajax，需要传递请求方式，请求数据,请求地址，以及其它配置
         ```typescript
