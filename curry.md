@@ -31,7 +31,7 @@
      尽管调用变得简单了，但是函数也不能执行get等方法了，如果想要使用get方法，要么如下调用：
 > ajaxFunc("get","test.com","name=inory")
      要么再执行一遍curry函数：
-> let get=testCurry(ajaxFunc,"get")
+>  let get=testCurry(ajaxFunc,"get")
 
 ## 4.延迟执行
 -   假设我们有下面一个函数:
