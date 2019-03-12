@@ -4,6 +4,7 @@
     一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术
 
 ## 2.简单实现
+
     ```typescript
         let testCurry:(fn:Function)=>Function=function(fn){
             let args=[].slice.call(arguments,1)
