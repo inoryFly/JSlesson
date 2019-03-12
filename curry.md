@@ -14,13 +14,13 @@
     ```
 ## 3.提高适用性--降低适用范围
 -    例如：一般性得封装ajax，需要传递请求方式，请求数据,请求地址，以及其它配置
-    ```typescript
-        let ajaxFunc=function(type,url,data){
-            let ajxhr=new XMLHttpRequest()
-            ajxhr.open(type, url, true);
-            ajxhr.send(data);
-        }
-    ```
+        ```typescript
+            let ajaxFunc=function(type,url,data){
+                let ajxhr=new XMLHttpRequest()
+                ajxhr.open(type, url, true);
+                ajxhr.send(data);
+            }
+        ```
     调用得时候则是：
 >    ajaxFunc("post","test.com","name=inory")
 -    如果我们使用了curry进行简化调用：
