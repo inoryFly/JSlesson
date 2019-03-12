@@ -27,11 +27,11 @@
 -    如果我们使用了curry进行简化调用：
 > let post=testCurry(ajaxFunc,"post")
 -    现在调用则变得简单：
->    post("test.com","name=inory")
+> post("test.com","name=inory")
      尽管调用变得简单了，但是函数也不能执行get等方法了，如果想要使用get方法，要么如下调用：
->    ajaxFunc("get","test.com","name=inory")
+> ajaxFunc("get","test.com","name=inory")
      要么再执行一遍curry函数：
->   let get=testCurry(ajaxFunc,"get")
+> let get=testCurry(ajaxFunc,"get")
 
 ## 4.延迟执行
 -   假设我们有下面一个函数:
