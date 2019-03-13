@@ -41,7 +41,7 @@
     ajaxFunc("get","test.com","name=inory")
 ```
 
-     要么再执行一遍curry函数：
+   要么再执行一遍curry函数：
 
 ```typescript
     let get=testCurry(ajaxFunc,"get")
@@ -60,7 +60,7 @@
     commonFunc(1,2)
 ```
 
-    这个函数一次性无论输入多少个参数，都会立即执行，但是，有些时候我们的参数不是一次性获取的，那么我们就可以使用上curry函数了：
+   这个函数一次性无论输入多少个参数，都会立即执行，但是，有些时候我们的参数不是一次性获取的，那么我们就可以使用上curry函数了：
 
 ```typescript
         let curry2:(fn:Function,...resetParams:Array<number>)=>Function=function(fn){
@@ -76,7 +76,7 @@
             }
         }
 ```
-    我们可以这样来调用：
+   我们可以这样来调用：
 >   let resultFunc=curry2(commonFunc,1,2)  
 此时函数只存储了参数，并没有进行相应的计算操作，如果再接受一个参数就需要马上执行的话，代码如下：
 >   resultFunc(2)()
