@@ -27,17 +27,25 @@
     ajaxFunc("post","test.com","name=inory")
 ```
 -    如果我们使用了curry进行简化调用：
-> let post=testCurry(ajaxFunc,"post")
+```typescript
+    let post=testCurry(ajaxFunc,"post")
+```
 -    现在调用则变得简单：
-> post("test.com","name=inory")
+```typescript
+    post("test.com","name=inory")
+```
      尽管调用变得简单了，但是函数也不能执行get等方法了，如果想要使用get方法，要么如下调用：
-> ajaxFunc("get","test.com","name=inory")
+```typescript
+    ajaxFunc("get","test.com","name=inory")
+```
      要么再执行一遍curry函数：
->  let get=testCurry(ajaxFunc,"get")
+```typescript
+    let get=testCurry(ajaxFunc,"get")
+```
 
 ## 4.延迟执行
 -   假设我们有下面一个函数:
-```typescrippt
+```typescript
     let commonFunc:(...resetParams:Array<number>)=>number=function(){
         let total=0;
         for(let i=0;i<arguments.length;i++){
@@ -46,9 +54,9 @@
         return total
     }
     commonFunc(1,2)
-````
+```
     这个函数一次性无论输入多少个参数，都会立即执行，但是，有些时候我们的参数不是一次性获取的，那么我们就可以使用上curry函数了：
-    ```typscript
+```typescript
         let curry2:(fn:Function,...resetParams:Array<number>)=>Function=function(fn){
             let args=[].slice.call(arguments,1)
             let len:number=fn.length
