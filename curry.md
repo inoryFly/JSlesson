@@ -35,7 +35,7 @@
     post("test.com","name=inory")
 ```
 
-     尽管调用变得简单了，但是函数也不能执行get等方法了，如果想要使用get方法，要么如下调用：
+   尽管调用变得简单了，但是函数也不能执行get等方法了，如果想要使用get方法，要么如下调用：
 
 ```typescript
     ajaxFunc("get","test.com","name=inory")
