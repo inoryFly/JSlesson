@@ -77,6 +77,12 @@
         }
 ```
    我们可以这样来调用：
->   let resultFunc=curry2(commonFunc,1,2)  
+```typescript
+   let resultFunc=curry2(commonFunc,1,2)
+```
+
 此时函数只存储了参数，并没有进行相应的计算操作，如果再接受一个参数就需要马上执行的话，代码如下：
->   resultFunc(2)()
+
+```typescript
+   resultFunc(2)()
+```
