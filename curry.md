@@ -34,11 +34,15 @@
 ```typescript
     post("test.com","name=inory")
 ```
+
      尽管调用变得简单了，但是函数也不能执行get等方法了，如果想要使用get方法，要么如下调用：
+
 ```typescript
     ajaxFunc("get","test.com","name=inory")
 ```
+
      要么再执行一遍curry函数：
+
 ```typescript
     let get=testCurry(ajaxFunc,"get")
 ```
@@ -55,7 +59,9 @@
     }
     commonFunc(1,2)
 ```
+
     这个函数一次性无论输入多少个参数，都会立即执行，但是，有些时候我们的参数不是一次性获取的，那么我们就可以使用上curry函数了：
+
 ```typescript
         let curry2:(fn:Function,...resetParams:Array<number>)=>Function=function(fn){
             let args=[].slice.call(arguments,1)
