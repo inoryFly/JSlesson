@@ -23,7 +23,9 @@
     }
 ```
 -    调用得时候则是：
-> ajaxFunc("post","test.com","name=inory")
+```typescript
+    ajaxFunc("post","test.com","name=inory")
+```
 -    如果我们使用了curry进行简化调用：
 > let post=testCurry(ajaxFunc,"post")
 -    现在调用则变得简单：
