@@ -26,7 +26,8 @@
     ```typescript
         @hocWrapped
         class OldComponent extends Component{/* Code */}
-    ```    
+    ```
+        
 带有参数的时候:
 
     ```typescript
