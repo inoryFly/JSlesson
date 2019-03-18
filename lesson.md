@@ -13,33 +13,33 @@
 　　<li>
 　　高阶函数方式：
 
-    ```typescript
+```typescript
         let NewComponent1=hocWrapped(OldComponent)
         let NewComponent2=hocWrapped(perhapsParams)(OldComponent)
-    ```
+```
 这时候 <strong>hocWrapped</strong>已经变成了一个高阶函数，只不过返回的是一个高阶组件。这种形式大量出现在第三方库中，如dva中的connect就是一个典型: 
 > connect([mapStateToProps])(OldComponent)
 </li>
 <li>
     修饰器模式：
 
-    ```typescript
+```typescript
         @hocWrapped
         class OldComponent extends Component{/* Code */}
-    ```        
+```        
 带有参数的时候:
 
-    ```typescript
+```typescript
         @hocWrapped(perhapsParams)
         class OldComponent extends Component{/* Code */}
-    ```
+```
 装饰器模式即允许向一个现有的对象添加新的功能，同时又不改变其结构，属于包装模式的一种。同时，有多个装饰器的时候，会像剥洋葱一样，从内到外进入，然后由内到外执行。
 
-    ```typescript
+```typescript
         @hocWrapped1   //secondAction
         @hocWrapped2  //firstAction
         class OldComponent extends Component{/* Code */}
-    ```
+```
 等价于：
 > 
 </li>
