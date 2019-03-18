@@ -20,7 +20,7 @@
 这时候 <strong>hocWrapped</strong>已经变成了一个高阶函数，只不过返回的是一个高阶组件。这种形式大量出现在第三方库中，如dva中的connect就是一个典型: 
 > connect([mapStateToProps])(OldComponent)
 </li>
-    <li>
+<li>
     修饰器模式：
 
     ```typescript
