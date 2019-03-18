@@ -26,15 +26,14 @@
     ```typescript
         @hocWrapped
         class OldComponent extends Component{/* Code */}
-    ```
-        
+    ```        
 带有参数的时候:
 
     ```typescript
         @hocWrapped(perhapsParams)
         class OldComponent extends Component{/* Code */}
     ```
-    装饰器模式即允许向一个现有的对象添加新的功能，同时又不改变其结构，属于包装模式的一种。同时，有多个装饰器的时候，会像剥洋葱一样，从内到外进入，然后由内到外执行。
+装饰器模式即允许向一个现有的对象添加新的功能，同时又不改变其结构，属于包装模式的一种。同时，有多个装饰器的时候，会像剥洋葱一样，从内到外进入，然后由内到外执行。
 
     ```typescript
         @hocWrapped1   //secondAction
