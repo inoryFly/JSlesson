@@ -8,11 +8,11 @@
 
 ## 使用场景及使用方法
 <div>
-　　高阶组件实用性很高，应用场景广泛，上到注入props成为受控组件，下到减少冗余代码。其调用也很简单，主要有两种方式：
+　　高阶组件实用性很高，应用场景广泛，上到注入props成为受控组件，下到减少冗余代码。其调用也很简单，主要有两种方式：  
 　　1. 高阶函数方式：
 
 ```typescript
-    let NewCompnent:React.Component=hocWrapped(oldComponent:React.Component):React.Component
+    let NewCompnent=hocWrapped(oldComponent)
 ```
 高阶组件还是ES6的装饰器模式在React的实现。即允许向一个现有的对象添加新的功能，同时又不改变其结构，属于包装模式的一种。
 </div>
