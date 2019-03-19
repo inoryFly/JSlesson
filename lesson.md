@@ -8,7 +8,7 @@
 
 ## 使用场景及使用方法
 <div>
-　　高阶组件实用性很高，应用场景广泛，上到注入props成为受控组件，下到减少冗余代码。其调用也很简单，主要有两种方式：  <br/>
+　　高阶组件实用性很高，应用场景广泛，上到注入props成为受控组件、抽象state，下到减少冗余代码和渲染劫持。其调用也很简单，主要有两种方式：  <br/>
 <ol>
 　　<li>
 　　高阶函数方式：
@@ -56,12 +56,76 @@
 - 操作props
   比如说添加自定义事件，属性
 - refs获取组件实例
-- 抽离state
-  这里不是通过ref获取state， 而是通过 { props, 回调函数 } 传递给wrappedComponent组件，通过回调函数获取state。这里用的比较多的就是react处理表单的时候。通常react在处理表单的时候，一般使用的是受控组件（文档），即把input都做成受控的，改变value的时候，用onChange事件同步到state中。
+- 抽离state。这里不是通过ref获取state， 而是通过 { props, 回调函数 } 传递给wrappedComponent组件，通过回调函数获取state。这里用的比较多的就是react处理表单的时候，比如说antd的<strong>Form.create()</strong>,通常react在处理表单的时候，一般使用的是受控组件（文档），即把input都做成受控的，改变value的时候，用onChange事件同步到state中。
+```typescript
+       const HocWrap=(WrappedComponent)=>{
+               return class extends Component{
+                       state={
+                               pagenumber:0,
+                               pagesize:10
+                       }
+                       //注意这里的生命周期,不会覆盖被包裹的组件生命周期
+                       componentWillUnmount(){
+                               /** Code 
+                               such as clear datas
+                               **/
+                       }
+                       componentDidMount(){
+                               this.refresh()
+                       }
+                       refresh(){
+                               /** Code 
+                               such as table datas request
+                               **/
+                       }
+                       getRef=(wrappedComponentInstance)=>{
+                               //利用回调我们获取到了被包裹组件的实例，我们可以借此来修改/添加props,或者执行某些实例的方法
+                               console.log(wrappedComponentInstance)
+                       }
+                       onChangePagination=(page, pageSize) =>{
+                               this.setState({
+                                       pagenumber:page -1,
+                                       pagesize:pageSize
+                               },()=>{
+                                       this.refresh()
+                               })
+                       }
+                       render(){
+                               const {pagenumber,pagesize}=this.state
+                               const newProps={
+                                       onChangePagination:this.onChangePagination,
+                                       pagenumber,pagesize
+                               }
+                               return <WrappedComponent {...this.props} ref={this.getRef} {...newProps}/>
+                       }
+               }
+       }
+```  
 
 ### 2.反向继承
 跟属性代理的方式不同的是，反向继承采用同过去继承wrappedComponent。本来是一种嵌套的关系，结果反向继承采返回的组件却继承了WrappedComponent，这看起来是一种反转的关系。
-通过继承WrappedComponent，除了一些静态方法，包括生命周期，state，各种function，我们都可以得到。
+通过继承WrappedComponent，除了一些静态方法，包括生命周期，state，各种function，我们都可以得到。但是值得注意的是，我们可以通过高阶组件来给wrappedComponent创建新的生命周期挂钩方法，但是需要调用<strong>super[lifecycleHook]</strong>防止破坏wrappedComponent。
+- 渲染劫持
+- 操作state
+
+```typescript
+        const HocII=WrappedComponent=>{
+                return class exens extends WrappedComponent{
+                        //注意，需要手动
+                        componentDidMount(){
+                                /** public Code **/
+                                super.componentDidMount()
+                        }
+                        render(){
+                                        if(this.props.isLoading){
+                                               return <LoadingComponents />
+                                        } else {
+                                                return super.render()
+                                        }
+                        }
+                }
+        }
+```
 
 
 ## 注意事项
