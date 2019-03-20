@@ -3,7 +3,15 @@
 ## 背景知识
 <div>
 　　在开始讲述高阶组件前，我们先来回顾高阶函数的定义：接收函数作为输入，或者输出另一个函数的一类函数，被称作高阶函数。常见的高阶函数如：debounce防抖函数。<br/>
-　　<strong>高阶组件本质上也是一个函数，并不是一个组件。</strong>对于高阶组件，它描述的便是接受React组件作为输入，输出一个新的React组件的组件。
+
+>  let higerFunc:(fn:Function)=>Function
+
+<strong>高阶组件本质上也是一个函数，并不是一个组件。</strong>对于高阶组件，它描述的便是接受React组件作为输入，输出一个新的React组件的组件。
+>  let Hoc1:(WrappedComponent:React.Component)=>React.Component 
+
+带有参数的时候：
+
+>  let Hoc2:(...resetParams:Array\<any\>)=>(WrappedComponent:React.Component)=>React.Component
 </div>
 
 ## 使用场景及使用方法
@@ -46,6 +54,17 @@
 ## 与父组件的区别
 <div>
 　　从逻辑的执行流程上来看，高阶组件确实和父组件比较相像，但是高阶组件强调的是逻辑的抽象。高阶组件是一个函数，函数关注的是逻辑；父组件是一个组件，组件主要关注的是UI/DOM。如果逻辑是与DOM直接相关的，那么这部分逻辑适合放到父组件中实现；如果逻辑是与DOM不直接相关的，那么这部分逻辑适合使用高阶组件抽象，如数据校验、请求发送等。
+
+```typescript
+        {React.Children.map(children, child => {
+          return React.cloneElement(child, null, React.Children.map(child.props.children, childs => {
+            return React.cloneElement(childs, { stationid: this.state.stationid,
+                type:this.state.type,
+                allrangePickerValue:this.state.rangePickerValue
+            });
+          }));
+        })}
+```
 </div>
 
 ## 书写形式
@@ -59,7 +78,7 @@
 - 抽离state。这里不是通过ref获取state， 而是通过 { props, 回调函数 } 传递给wrappedComponent组件，通过回调函数获取state。这里用的比较多的就是react处理表单的时候，比如说antd的<strong>Form.create()</strong>,通常react在处理表单的时候，一般使用的是受控组件（文档），即把input都做成受控的，改变value的时候，用onChange事件同步到state中。
 ```typescript
        const HocWrap=(WrappedComponent)=>{
-               return class extends Component{
+               return class Hoc extends Component{
                        state={
                                pagenumber:0,
                                pagesize:10
@@ -78,10 +97,7 @@
                                such as table datas request
                                **/
                        }
-                       getRef=(wrappedComponentInstance)=>{
-                               //利用回调我们获取到了被包裹组件的实例，我们可以借此来修改/添加props,或者执行某些实例的方法
-                               console.log(wrappedComponentInstance)
-                       }
+                      
                        onChangePagination=(page, pageSize) =>{
                                this.setState({
                                        pagenumber:page -1,
@@ -96,7 +112,7 @@
                                        onChangePagination:this.onChangePagination,
                                        pagenumber,pagesize
                                }
-                               return <WrappedComponent {...this.props} ref={this.getRef} {...newProps}/>
+                               return <WrappedComponent {...this.props}  {...newProps}/>
                        }
                }
        }
@@ -132,3 +148,30 @@
 - 不要在组件的render方法中使用高阶组件，尽量也不要在组件的其他生命周期方法中使用高阶组件。因为高阶组件每次都会返回一个新的组件，在render中使用会导致每次渲染出来的组件都不相等（===），于是每次render，组件都会卸载（unmount），然后重新挂载（mount），既影响了效率，又丢失了组件及其子组件的状态。高阶组件最适合使用的地方是在组件定义的外部，这样就不会受到组件生命周期的影响了。
 - 如果需要使用被包装组件的静态方法，那么必须手动拷贝这些静态方法。因为高阶组件返回的新组件，是不包含被包装组件的静态方法。
 - Refs不会被传递给被包装组件。尽管在定义高阶组件时，我们会把所有的属性都传递给被包装组件，但是ref并不会传递给被包装组件，因为ref根本不属于React组件的属性。如果你在高阶组件的返回组件中定义了ref，那么它指向的是这个返回的新组件，而不是内部被包装的组件。如果你希望获取被包装组件的引用，你可以把ref的回调函数定义成一个普通属性（给它一个ref以外的名字）。
+
+```typescript
+        const HocWrap=WrappedComponent=>{
+                return class Hoc extends Component{
+                        render(){
+                                let newprops = {
+                                        ref:this.props.getInstance
+                                }
+                                return <WrappedComponent {...this.props} {...newprops}/>
+                        }
+                }
+        }
+```
+
+在16.4之后可以通过给定的<strong>forwardedRef</strong>进行转发：
+
+```typescript
+        const HocWrap=WrappedComponent=>{
+                class Hoc extends Component{
+                        render(){
+                                let {forwardedRef,...reset}=this.props
+                                return <WrappedComponent {...reset} ref={forwardedRef}/>
+                        }
+                }
+                return React.forwardRef((props,ref)=><Hoc {...props} forwardRef={ref}>)
+        }
+```
