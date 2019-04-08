@@ -27,5 +27,5 @@
 - 能设置宽高
 - 设置上下<strong>margin</strong>和上下<strong>padding</strong>无效<br/>
 
-<strong>iblock</strong>(块级元素):
+<strong>block</strong>(块级元素):
 都行
