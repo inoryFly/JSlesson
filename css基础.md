@@ -21,9 +21,11 @@
 - 不自动换行
 - 设置宽高无效
 - 设置上下<strong>margin</strong>和上下<strong>padding</strong>无效<br/>
+
 <strong>inline-block</strong>(行内块元素):
 - 不自动换行
 - 能设置宽高
 - 设置上下<strong>margin</strong>和上下<strong>padding</strong>无效<br/>
+
 <strong>iblock</strong>(块级元素):
 都行
