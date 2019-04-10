@@ -19,7 +19,7 @@
     </script>
 ```
 从上可知，DOM0级事件就是将要执行的代码以函数的形式传入事件处理属性中。我们可以通过为事件属性添加<strong>null</strong>来进行解绑
-这种事件处理方式缺点一览无余：无法对同一事件处理属性添加多个处理函数，后面添加的处理函数会覆盖之前的。
+这种事件处理方式缺点：无法对同一事件处理属性添加多个处理函数，后面添加的处理函数会覆盖之前的。
 
 ### 2.DOM2级事件
 
@@ -74,4 +74,27 @@ DOM3级事件在DOM2级事件的基础上添加了更多的事件，全部类型
    - 合成事件，当为IME（输入法编辑器）输入字符时触发，如：compositionstart
    - 变动事件，当底层DOM结构发生变化时触发，如：DOMsubtreeModified。
    
-同时，DOM3级事件也允许我们使用自定义的事件。关于自定义事件我们将在下节补充。
+同时，DOM3级事件也允许我们使用自定义的事件。关于自定义事件我们将在下面讲解
+
+## 3.自定义事件
+可以在<strong>document</strong>对象上使用Event创建新的比较简单的事件：
+```typescript
+    let ev=new Event("look",{"bubbles":false,cancelable:false})
+    document.dispatchEvent(ev)
+    //事件可以在任何元素触发，不仅仅是documnet
+    // addEvent("look",myDiv,fn)
+    // myDiv.dispatchEvent(ev)
+```
+Event接受两个参数，第一个参数是创建事件的名称，第二个参数为可选参数，对事件进行初始化配置，为一个字典，接受以下字段：
+- "bubbles",Boolean类型，默认值为false,表示该事件是否冒泡
+- "cancelable",Boolean类型，默认值为false,表示该事件能否被取消
+- "composed"，Boolean类型，默认值为false,指示事件是否会在<a href="https://developer.mozilla.org/zh-CN/docs/Web/Web_Components/%E5%BD%B1%E5%AD%90_DOM">影子DOM</a>根节点之外触发侦听器。
+还有一种创建事件的方法，是使用<strong>Event</strong>的<strong>createEvent</strong>方法:
+```typescript
+    let ev=document.createEvent('Event')
+
+    ev.initEvent('click',true,false)
+    addEvent('click',myDiv,fn)
+    myDiv.dispatchEvent(ev)
+```
+这种方法不推荐，貌似initEvent即将被废弃，而<strong>createEvent</strong>创建的事件又必须使用<strong>initEvent</strong>初始化，所以就比较尴尬。
