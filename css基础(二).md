@@ -34,5 +34,23 @@
 <span style="color:red">注意</span>：它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间
 - flex：是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
 <span style="color:red">注意</span>：该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。
-至于<strong>flex:\<intnumber\></strong>
+至于<strong>flex:\<intnumber\></strong>，等同于：
+```css
+    .item{
+        flex-grow:1;
+        flex-shrink:1;
+        flex-basis:0%;
+    }
+```
+当flex取值为一个长度或百分比，则等同于下面：
+```css
+    .item{
+        flex:n%|n px;
+    }
+    .item{
+        flex-grow:1;
+        flex-shrink:1;
+        flex-basis:n%|n px;
+    }
+```
 - align-self:允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。值为--auto | flex-start | flex-end | center | baseline | stretch;默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。
