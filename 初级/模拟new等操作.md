@@ -32,7 +32,11 @@ function simulationNew(originObj){
 ## 4.模拟代码（bind）
 
 ```javascript
+//丢失了length与name属性，可以通过Object.defineProperty设置
     Function.prototype.test=function(context){
+        if(typeof this!="function"){
+            throw new Error("what is trying to be bound is not callable")
+        }
             var self=this
             var args=Array.prototype.slice.call(arguments,1)
             var bound=function(){
