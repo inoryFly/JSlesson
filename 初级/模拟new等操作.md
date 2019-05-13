@@ -32,12 +32,30 @@ function simulationNew(originObj){
 ## 4.模拟代码（bind）
 
 ```javascript
-    Function.prototype.bind=Function.prototype.bind||function(context){
-        var that=this
-        let args=[].slice.call(arguments,1)
-        return function(){
-            let final=args.concat([].slice.call(arguments))
-            return that.apply(context,final)
+    Function.prototype.test=function(context){
+            var self=this
+            var args=Array.prototype.slice.call(arguments,1)
+            var bound=function(){
+                var leftArg=Array.prototype.slice.call(arguments)
+                var finalArg=args.concat(leftArg)
+                if(this instanceof bound){
+                    if(self.prototype){
+                        //采用的MDN的ployfill方式
+                        function Empty(){}
+                        Empty.prototype=self.prototype
+                        bound.prototype=new Empty()
+                    }
+                    var result=self.apply(this,finalArg)
+                    if(result){
+                        if(typeof result=='function'||typeof result=='object'){
+                            return result
+                        }
+                    }
+                    return this
+                }else{
+                    return self.apply(context,finalArg)
+                }
+            }
+            return bound
         }
-    }
 ```
