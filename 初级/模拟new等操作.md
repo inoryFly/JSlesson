@@ -33,7 +33,7 @@ function simulationNew(originObj){
 
 ```javascript
 //丢失了length与name属性，可以通过Object.defineProperty设置
-    Function.prototype.test=function(context){
+    Function.prototype.bind=Function.prototype.bind||function(context){
         if(typeof this!="function"){
             throw new Error("what is trying to be bound is not callable")
         }
